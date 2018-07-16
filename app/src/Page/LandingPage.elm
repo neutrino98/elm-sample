@@ -8,7 +8,6 @@ import Request.Person as Person exposing (..)
 import Views.PersonsList as PersonsList exposing (..)
 import Task exposing (Task)
 
-
 --Model--
 
 
@@ -22,8 +21,10 @@ init : Task.Task Model Model
 init =
     let
         handleLoadError a = Model ( toString a) []
+        persons = Person.getPersons
+        _ = Debug.log ("persons from api: " ++ (toString persons))
     in
-        Task.map (\x -> Model "" x) Person.getPersons
+        Task.map (\x -> Model "" x) persons
             |> Task.mapError handleLoadError
     -- let
     --     persons =
@@ -49,6 +50,6 @@ initialModel persons a =
 --View--
 
 
-view : Html msg
-view =
-    PersonsList.personsList []
+view : List Person -> Html msg
+view persons =
+    PersonsList.personsList persons

@@ -1,32 +1,50 @@
 module Main exposing (..)
 
-import Html exposing (Html, text, div, h1, img)
+import Data.Person exposing (..)
+import Html exposing (Html, div, h1, img, text)
 import Html.Attributes exposing (src)
+import Http exposing (..)
+import Page.LandingPage as LandingPage
+import Request.Person as PersonRequest exposing (..)
+import Task exposing (Task)
 
 
 ---- MODEL ----
 
 
 type alias Model =
-    {}
+    { plist : List Person
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    let
+        personsTask =
+            PersonRequest.getPersons
 
+        initailModel =
+            { plist = []
+            }
+    in
+    ( initailModel, Task.attempt PersonsLoadedMsg personsTask )
 
 
 ---- UPDATE ----
 
 
 type Msg
-    = NoOp
+    = PersonsLoadedMsg (Result Http.Error (List Person))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        PersonsLoadedMsg (Ok list) ->
+            ( { model | plist = list }, Cmd.none )
+
+        _ ->
+            ( model, Cmd.none )
 
 
 
@@ -36,7 +54,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ text "Hello world!" ]
+        [ LandingPage.view model.plist]
+
 
 
 ---- PROGRAM ----

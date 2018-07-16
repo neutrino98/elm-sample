@@ -1,4 +1,4 @@
-module Request.Person exposing(getPersonById)
+module Request.Person exposing(getPersonById, getPersons)
 
 import Http
 import Request.Helpers exposing(apiUrl)
@@ -21,11 +21,11 @@ getPersonById id =
             |> Http.toTask
 
 
-getPersons: String -> Task Http.Error List Person
+getPersons: Task Http.Error (List Person)
 getPersons = 
     let 
         expect = 
-            Person.personsDecoder
+            Person.personListDecoder
                 |> Http.expectJson
     in 
         apiUrl("/people/")

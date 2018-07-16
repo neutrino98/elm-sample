@@ -1,31 +1,26 @@
 module Data.Person exposing (..)
 
-import Json.Decode as Decode exposing (Decoder)
+import Json.Decode as Decode exposing (Decoder, list)
 import Json.Decode.Pipeline exposing (decode, required)
 
 
 type alias Person =
     { name : String
-    , height : Float
-    , mass : Float
+    , height : String
+    , mass : String
     , gender : String
     }
-
-
-type Persons
-    = List Person
-
-
-personsDecoder : Decoder (List Person)
-personsDecoder =
-    decode Persons
-        |> required "results" personDecoder
 
 
 personDecoder : Decoder Person
 personDecoder =
     decode Person
         |> required "name" Decode.string
-        |> required "height" Decode.float
-        |> required "mass" Decode.float
+        |> required "height" Decode.string
+        |> required "mass" Decode.string
         |> required "gender" Decode.string
+
+
+personListDecoder : Decoder (List Person)
+personListDecoder =
+    Decode.field "results" (list personDecoder)
