@@ -1,8 +1,8 @@
 module State exposing (..)
 
-import Types exposing (..)
 import Request.Person as PersonRequest exposing (..)
 import Task exposing (Task)
+import Types exposing (..)
 
 
 init : ( Model, Cmd Msg )
@@ -14,20 +14,28 @@ init =
         initailModel =
             { plist = []
             , currentPerson = Nothing
+            , error = Nothing
             }
     in
-    ( initailModel, Task.attempt PersonsLoadedMsg personsTask )
+    ( initailModel, Task.attempt PersonsLoaded personsTask )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        PersonsLoadedMsg (Ok list) ->
+        PersonsLoaded (Ok list) ->
             ( { model | plist = list }, Cmd.none )
+
+        PersonsLoaded (Err error) ->
+            ( { model | error = Just (toString error) }, Cmd.none )
 
         SelectedPersonLoaded (Ok person) ->
             ( { model | currentPerson = Just person }, Cmd.none )
 
-        _ ->
-            ( model, Cmd.none )
+        SelectedPersonLoaded (Err error) ->
+            ( { model | error = Just (toString error) }, Cmd.none )
 
+        OnPersonClick url -> 
+            (model, Task.attempt SelectedPersonLoaded (PersonRequest.getPersonById url))
+        
+        

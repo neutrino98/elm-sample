@@ -1,9 +1,12 @@
 module Types exposing (..)
+
 import Http exposing (..)
+
 
 type alias Model =
     { plist : List Person
     , currentPerson : Maybe Person
+    , error: Maybe String
     }
 
 
@@ -15,7 +18,8 @@ type alias Person =
     , url : String
     }
 
+
 type Msg
-    = PersonsLoadedMsg (Result Http.Error (List Person))
+    = PersonsLoaded (Result Http.Error (List Person))
     | SelectedPersonLoaded (Result Http.Error Person)
-    | OnPersonClick String 
+    | OnPersonClick String

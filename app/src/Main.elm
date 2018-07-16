@@ -1,19 +1,9 @@
 module Main exposing (..)
 
-import Data.Person exposing (..)
-import Html exposing (Html, div, h1, img, text)
-import Html.Attributes exposing (src)
-import Http exposing (..)
-import Page.LandingPage as LandingPage
-import Types exposing (..)
+import Html exposing (..)
 import State exposing (..)
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ LandingPage.view model.plist ]
-
+import Types exposing (..)
+import View exposing (..)
 
 
 ---- PROGRAM ----
