@@ -2,15 +2,7 @@ module Data.Person exposing (..)
 
 import Json.Decode as Decode exposing (Decoder, list)
 import Json.Decode.Pipeline exposing (decode, required)
-
-
-type alias Person =
-    { name : String
-    , height : String
-    , mass : String
-    , gender : String
-    }
-
+import Types exposing (..)
 
 personDecoder : Decoder Person
 personDecoder =
@@ -19,6 +11,7 @@ personDecoder =
         |> required "height" Decode.string
         |> required "mass" Decode.string
         |> required "gender" Decode.string
+        |> required "url" Decode.string
 
 
 personListDecoder : Decoder (List Person)

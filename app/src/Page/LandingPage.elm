@@ -5,8 +5,9 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Http exposing (..)
 import Request.Person as Person exposing (..)
-import Views.PersonsList as PersonsList exposing (..)
 import Task exposing (Task)
+import Views.PersonsList as PersonsList exposing (..)
+import Types exposing(..)
 
 --Model--
 
@@ -20,23 +21,17 @@ type alias Model =
 init : Task.Task Model Model
 init =
     let
-        handleLoadError a = Model ( toString a) []
-        persons = Person.getPersons
-        _ = Debug.log ("persons from api: " ++ (toString persons))
-    in
-        Task.map (\x -> Model "" x) persons
-            |> Task.mapError handleLoadError
-    -- let
-    --     persons =
-    --         Person.getPersons |> Task.toResult   
-    -- in
-    -- case persons of
-        
-    --     Err a ->
-    --         initialModel [] a
+        handleLoadError a =
+            Model (toString a) []
 
-    --     Ok persons1 ->
-    --         initialModel persons1 ""
+        persons =
+            Person.getPersons
+
+        _ =
+            Debug.log ("persons from api: " ++ toString persons)
+    in
+    Task.map (\x -> Model "" x) persons
+        |> Task.mapError handleLoadError
 
 
 initialModel : List Person -> String -> Model
@@ -50,6 +45,6 @@ initialModel persons a =
 --View--
 
 
-view : List Person -> Html msg
+view : List Person -> Html Msg
 view persons =
     PersonsList.personsList persons

@@ -3,13 +3,12 @@ module Views.PersonsList exposing (..)
 import Data.Person exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
+import Http exposing (..)
+import Types exposing(..)
 
 
-type Msg
-    = OnClickUser
-
-
-renderPerson : Person -> Html msg
+renderPerson : Person -> Html Msg
 renderPerson person =
     tr [ class "person-list-table-body" ]
         [ td []
@@ -20,10 +19,14 @@ renderPerson person =
             [ text person.mass ]
         , td []
             [ text person.gender ]
+        , td []
+             [ button [ onClick (OnPersonClick person.url) ]
+                    [ text "View profile" ]
+                ]     
         ]
 
 
-personsList : List Person -> Html msg
+personsList : List Person -> Html Msg
 personsList persons =
     div []
         [ h3 [ class "person-list-header" ]
@@ -38,8 +41,11 @@ personsList persons =
                     [ text "mass" ]
                 , th []
                     [ text "gender" ]
+                , th []
+                    [ text "profile" ]    
                 ]
              ]
                 ++ List.map renderPerson persons
             )
         ]
+

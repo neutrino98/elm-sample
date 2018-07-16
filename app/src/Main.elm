@@ -7,7 +7,7 @@ import Http exposing (..)
 import Page.LandingPage as LandingPage
 import Request.Person as PersonRequest exposing (..)
 import Task exposing (Task)
-
+import Types exposing(..)
 
 ---- MODEL ----
 
@@ -31,11 +31,6 @@ init =
 
 
 ---- UPDATE ----
-
-
-type Msg
-    = PersonsLoadedMsg (Result Http.Error (List Person))
-
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =

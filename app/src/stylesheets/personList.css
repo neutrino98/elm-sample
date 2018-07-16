@@ -1,0 +1,16 @@
+.person-list-header {
+    text-align: center
+}
+
+.person-list-table {
+    width: 100%;
+}
+
+.person-list-table-header {
+    background: lightgray;
+}
+
+.person-list-table-body {
+    text-align: center; 
+    background: azure
+}
