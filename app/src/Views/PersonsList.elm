@@ -4,37 +4,32 @@ import Data.Person exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
-type Msg 
-    = OnClickUser 
+
+type Msg
+    = OnClickUser
 
 
-renderPerson: Person -> Html msg
-renderPerson person = 
-    tr [style [ ( "text-align", "center" ) ]]
-    [ td []
-        [ text person.name ]
-    
-    , td []
-        [ text person.height ]
-   
-    , td []
-        [ text person.mass ]
-    
-    , td []
-        [ text person.gender ]
-    
-    ]
+renderPerson : Person -> Html msg
+renderPerson person =
+    tr [ class "person-list-table-body" ]
+        [ td []
+            [ text person.name ]
+        , td []
+            [ text person.height ]
+        , td []
+            [ text person.mass ]
+        , td []
+            [ text person.gender ]
+        ]
 
 
-
-
-personsList : List Person -> Html msg 
+personsList : List Person -> Html msg
 personsList persons =
     div []
-        [ h3 []
-            [ text "Persons list:" ]
-        , table [ style [ ( "width", "100%" ) ] ]
-            ([ tr []
+        [ h3 [ class "person-list-header" ]
+            [ text "Persons list" ]
+        , table [ class "person-list-table" ]
+            ([ tr [ class "person-list-table-header" ]
                 [ th []
                     [ text "name" ]
                 , th []
@@ -43,29 +38,8 @@ personsList persons =
                     [ text "mass" ]
                 , th []
                     [ text "gender" ]
-                
-                ] 
-            ] ++  List.map renderPerson persons)
+                ]
+             ]
+                ++ List.map renderPerson persons
+            )
         ]
-
-
-
-{-
-<div>
-    <h3>Persons list:</h3>
-    <table style="width: 100%">
-        <tr>
-            <th>name</th>
-            <th>height</th>
-            <th>mass</th>
-            <th>gender</th>
-            
-        </tr>
-    </table>
-</div>
--}
-
-
-
-
-    
