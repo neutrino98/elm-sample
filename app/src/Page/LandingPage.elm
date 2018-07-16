@@ -26,9 +26,6 @@ init =
 
         persons =
             Person.getPersons
-
-        _ =
-            Debug.log ("persons from api: " ++ toString persons)
     in
     Task.map (\x -> Model "" x) persons
         |> Task.mapError handleLoadError
