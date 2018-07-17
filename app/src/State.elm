@@ -5,7 +5,7 @@ import Request.Person as PersonRequest exposing (..)
 import Routing exposing (..)
 import Task exposing (Task)
 import Types exposing (..)
-
+import Utils exposing (..)
 
 init : Location -> ( Model, Cmd Msg )
 init location =
@@ -49,7 +49,17 @@ update msg model =
             ( { model | error = Just (toString error) }, Cmd.none )
 
         OnPersonClick url ->
-            ( model, Task.attempt SelectedPersonLoaded (PersonRequest.getPersonById url) )
+            let 
+                id = 
+                    case getIdFromUrl url 2 of
+                        Nothing -> Debug.crash "!!!"
+                        Just s -> s 
+
+            in
+            ( model, Cmd.batch[
+                Task.attempt SelectedPersonLoaded (PersonRequest.getPersonById url) 
+                , Navigation.newUrl ("/people/" ++ id)
+            ])
 
         LocationChanged location ->
             ( { model

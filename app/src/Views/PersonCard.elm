@@ -1,4 +1,4 @@
-module PersonCard exposing (..)
+module Views.PersonCard exposing (..)
 
 import Data.Person exposing (..)
 import Html exposing (..)

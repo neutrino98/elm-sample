@@ -31,5 +31,5 @@ type Msg
 
 type Route 
     = LandingPageRoute 
-    | PersonRoute Int 
+    | PersonRoute String  
     | NotFoundRoute
