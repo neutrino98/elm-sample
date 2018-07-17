@@ -62,8 +62,12 @@ update msg model =
             ])
 
         LocationChanged location ->
-            ( { model
-                | currentRoute = Routing.extractRoute location
-              }
+            let 
+                nextRoute = Routing.extractRoute location  
+            in
+            ( { model |
+                currentRoute = nextRoute,
+                currentPerson = if nextRoute == LandingPageRoute then emptyPerson else model.currentPerson   
+               }
             , Cmd.none
             )
