@@ -9,6 +9,7 @@ type alias Model =
     , currentPerson : Person
     , error: Maybe String
     , currentRoute: Route
+    , loading: Bool
     }
 
 
@@ -27,6 +28,7 @@ type Msg
     | SelectedPersonLoaded (Result Http.Error Person)
     | OnPersonClick String
     | LocationChanged Location
+    --| Loading 
 
 
 type Route 

@@ -20,7 +20,7 @@ view model =
         view =
             case model.currentRoute of
                 LandingPageRoute ->  
-                    LandingPage.view model.plist
+                    LandingPage.view model.plist model.loading
                 
                 PersonRoute id -> 
                     Profile.view model.currentPerson

@@ -6,6 +6,6 @@ import Views.PersonsList as PersonsList exposing (..)
 import Types exposing(..)
 
 
-view : List Person -> Html Msg
-view persons =
-    PersonsList.personsList persons
+view : List Person -> Bool -> Html Msg
+view persons isLoading =
+    PersonsList.personsList persons isLoading 

@@ -5,8 +5,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Http exposing (..)
-import Types exposing(..)
-
+import Types exposing (..)
+import Utils exposing (..)
 
 renderPerson : Person -> Html Msg
 renderPerson person =
@@ -26,8 +26,11 @@ renderPerson person =
         ]
 
 
-personsList : List Person -> Html Msg
-personsList persons =
+personsList : ( List Person ) -> Bool -> Html Msg
+personsList persons isLoading =
+    let
+        body = if isLoading then [ loading ] else List.map renderPerson persons
+    in 
     div []
         [ h3 [ class "person-list-header" ]
             [ text "Persons list" ]
@@ -45,7 +48,7 @@ personsList persons =
                     [ text "profile" ]    
                 ]
              ]
-                ++ List.map renderPerson persons
+                ++ body
             )
         ]
 
