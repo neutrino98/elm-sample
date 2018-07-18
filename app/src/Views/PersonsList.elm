@@ -8,6 +8,7 @@ import Http exposing (..)
 import Types exposing (..)
 import Utils exposing (..)
 
+
 renderPerson : Person -> Html Msg
 renderPerson person =
     tr [ class "person-list-table-body" ]
@@ -20,17 +21,21 @@ renderPerson person =
         , td []
             [ text person.gender ]
         , td []
-             [ button [ onClick (OnPersonClick person.url) ]
-                    [ text "View profile" ]
-                ]     
+            [ button [ onClick (OnPersonClick person.url) ]
+                [ text "View profile" ]
+            ]
         ]
 
 
-personsList : ( List Person ) -> Bool -> Html Msg
+personsList : List Person -> Bool -> Html Msg
 personsList persons isLoading =
     let
-        body = if isLoading then [ loading ] else List.map renderPerson persons
-    in 
+        body =
+            if isLoading then
+                [ loading ]
+            else
+                List.map renderPerson persons
+    in
     div []
         [ h3 [ class "person-list-header" ]
             [ text "Persons list" ]
@@ -45,10 +50,9 @@ personsList persons isLoading =
                 , th []
                     [ text "gender" ]
                 , th []
-                    [ text "profile" ]    
+                    [ text "profile" ]
                 ]
              ]
                 ++ body
             )
         ]
-

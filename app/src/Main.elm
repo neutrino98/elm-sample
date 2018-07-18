@@ -1,10 +1,10 @@
 module Main exposing (..)
 
 import Html exposing (..)
+import Navigation exposing (Location)
 import State exposing (..)
 import Types exposing (..)
 import View exposing (..)
-import Navigation exposing (Location)
 
 
 ---- PROGRAM ----

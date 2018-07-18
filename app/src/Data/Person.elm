@@ -13,9 +13,8 @@ personDecoder =
         |> required "mass" Decode.string
         |> required "gender" Decode.string
         |> required "url" Decode.string
-        
+
 
 personListDecoder : Decoder (List Person)
 personListDecoder =
     Decode.field "results" (list personDecoder)
-    

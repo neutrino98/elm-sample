@@ -6,6 +6,6 @@ import Types exposing (..)
 import Views.PersonCard as PersonCard exposing (..)
 
 
-view: Person -> Html Msg
-view person = 
-    PersonCard.personCard person    
+view : Person -> Bool -> Html Msg
+view person isLoading =
+    PersonCard.personCard person isLoading

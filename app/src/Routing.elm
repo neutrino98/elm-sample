@@ -21,4 +21,3 @@ matchRoute =
         [ map LandingPageRoute (s "people")
         , map PersonRoute (s "people" </> string)
         ]
-

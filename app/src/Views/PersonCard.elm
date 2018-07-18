@@ -4,9 +4,23 @@ import Data.Person exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Types exposing (..)
+import Utils exposing (..)
 
-personCard : Person -> Html Msg
-personCard person = 
+
+personCard : Person -> Bool -> Html Msg
+personCard person isLoading =
+    let
+        body =
+            if isLoading then
+                loading
+            else
+                personCardBody person
+    in
+    body
+
+
+personCardBody : Person -> Html Msg
+personCardBody person =
     table []
         [ tr []
             [ td []
@@ -33,4 +47,3 @@ personCard person =
                 [ text person.gender ]
             ]
         ]
-
