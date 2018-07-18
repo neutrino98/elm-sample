@@ -36,8 +36,45 @@ initialModel route =
     , error = Nothing
     , currentRoute = route
     , loading = True
+    , inputPerson = emptyPerson
     }
 
+updatePersonField : String -> String -> (String -> Person -> Person) -> Model -> (Model, Cmd Msg)
+updatePersonField id newValue updateFunction model =
+    let 
+        getPersonId person =
+            case getIdFromUrl person.url 2 of 
+                Just s ->
+                    s 
+                Nothing ->
+                          Debug.crash "!!!"
+
+        updatePerson person =
+            if id == getPersonId person then 
+               updateFunction newValue person
+            else person
+    in
+    ({ model | currentPerson = updatePerson model.currentPerson }, Cmd.none) 
+
+
+setName : String -> Person -> Person
+setName newName person = 
+    ({ person | name = newName })
+
+
+setHeight : String -> Person -> Person
+setHeight newHeight person = 
+    ({ person | height = newHeight })
+
+
+setMass : String -> Person -> Person 
+setMass newMass person = 
+    ({ person | mass = newMass })
+
+
+setGender : String -> Person -> Person
+setGender newGender person = 
+    ({ person | gender = newGender })
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -105,3 +142,47 @@ update msg model =
               }
             , command
             )
+
+        UpdatePersonName personId newName -> 
+            updatePersonField personId newName setName model
+
+        UpdatePersonHeight personId newHeight -> 
+            updatePersonField personId newHeight setHeight model
+
+        UpdatePersonGender personId newGender -> 
+            updatePersonField personId newGender setGender model
+
+        UpdatePersonMass personId newMass -> 
+            updatePersonField personId newMass setMass model
+
+        OnNameInput name -> 
+            let
+                person = model.inputPerson
+                iu = { person | name = name}
+            in
+            ({ model | inputPerson = iu }, Cmd.none )
+
+        OnHeightInput height -> 
+            let 
+                person = model.inputPerson
+                iu = { person | height = height}
+            in                                               
+            ({ model | inputPerson = iu }, Cmd.none )
+
+        OnMassInput mass ->
+            let
+                person = model.inputPerson
+                iu = { person | mass = mass}
+            in 
+            ({ model | inputPerson = iu }, Cmd.none )
+
+        OnGenderInput gender ->
+            let
+                person = model.inputPerson
+                iu = { person | gender = gender}
+            in  
+            ({ model | inputPerson = iu }, Cmd.none )
+        
+        
+        -- _ -> 
+        --    (model, Cmd.none)        

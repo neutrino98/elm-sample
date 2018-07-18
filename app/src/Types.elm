@@ -10,6 +10,7 @@ type alias Model =
     , error : Maybe String
     , currentRoute : Route
     , loading : Bool
+    , inputPerson: Person
     }
 
 
@@ -22,13 +23,24 @@ type alias Person =
     }
 
 
+type PersonId = 
+    String
+
+
 type Msg
     = PersonsFetch
     | PersonsLoaded (Result Http.Error (List Person))
     | SelectedPersonLoaded (Result Http.Error Person)
     | OnPersonClick String
     | LocationChanged Location
-
+    | UpdatePersonName String String
+    | UpdatePersonHeight String String
+    | UpdatePersonMass String String 
+    | UpdatePersonGender String String
+    | OnNameInput String 
+    | OnHeightInput String 
+    | OnMassInput String 
+    | OnGenderInput String 
 
 
 --| Loading

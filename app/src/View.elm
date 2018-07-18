@@ -27,7 +27,7 @@ view model =
                     LandingPage.view model.plist model.loading
 
                 PersonRoute id ->
-                    Profile.view model.currentPerson model.loading
+                    Profile.view model.currentPerson model.inputPerson model.loading
 
                 NotFoundRoute ->
                     notFoundView
