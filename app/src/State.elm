@@ -13,8 +13,15 @@ init location =
     let
         currentRoute =
             Routing.extractRoute location
+        cmd = case currentRoute of 
+                LandingPageRoute -> 
+                    Task.attempt PersonsLoaded PersonRequest.getPersons
+                PersonRoute str -> 
+                    Task.attempt SelectedPersonLoaded (PersonRequest.getPersonById ("https://swapi.co/api/people/" ++ str))
+                NotFoundRoute -> 
+                    Cmd.none    
     in
-    ( initialModel currentRoute, Task.attempt PersonsLoaded PersonRequest.getPersons )
+    ( initialModel currentRoute, cmd)
 
 
 emptyPerson : Person
@@ -79,19 +86,22 @@ update msg model =
 
                 command =
                     case nextRoute of
-                        PersonRoute str ->
-                            Task.attempt SelectedPersonLoaded (PersonRequest.getPersonById model.currentPerson.url)
+                        LandingPageRoute -> 
+                            Task.attempt PersonsLoaded PersonRequest.getPersons    
 
                         _ ->
                             Cmd.none
-            in
-            ( { model
-                | currentRoute = nextRoute
-                , currentPerson =
+
+                сurrPerson = 
                     if nextRoute == LandingPageRoute then
                         emptyPerson
                     else
                         model.currentPerson
+            in
+            ( { model
+                | currentRoute = nextRoute
+                , currentPerson = сurrPerson                    
+                , loading = True        
               }
             , command
             )
